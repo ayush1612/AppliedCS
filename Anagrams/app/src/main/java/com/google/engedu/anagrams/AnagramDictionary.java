@@ -60,18 +60,32 @@ public class AnagramDictionary {
     }
 
     boolean isGoodWord(String word, String base) {
+
+        if(!wordSet.contains(word))
+            return false;
+
+        if(word.contains(base))
+            return false;
+
         return true;
+
     }
 
 
 
     List<String> getAnagrams(String targetWord) {
-        ArrayList<String> result = new ArrayList<String>();
-        for(String word : wordsList){
-            if(isAnagram(word,targetWord))
-                result.add(word);
-        }
-        return result;
+//        ArrayList<String> result = new ArrayList<String>();
+//        for(String word : wordsList){
+//            if(isAnagram(word,targetWord))
+//                result.add(word);
+//        }
+//        return result;
+        if(targetWord==null || targetWord.equals(""))
+            return null;
+        String letters = sortLetters(targetWord);
+        if(lettersToWord.containsKey(letters))
+            return lettersToWord.get(letters);
+        return null;
     }
 
     static boolean isAnagram(String first,String second){
@@ -92,6 +106,12 @@ public class AnagramDictionary {
 
     public List<String> getAnagramsWithOneMoreLetter(String word) {
         ArrayList<String> result = new ArrayList<String>();
+        for(char c = 'a';c<='z';c++){
+            List<String> temp = getAnagrams( word + c);
+            if(temp != null)
+                result.addAll(temp);
+
+        }
         return result;
     }
 
